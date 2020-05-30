@@ -10,7 +10,6 @@ contract Protocol is Ownable {
     mapping(address => bool) private in_network;
     mapping(address => uint256) private reward;
 
-    bool[8][8] friends;
     uint256 cooldown_time = 5 seconds; //单位时间
     uint256 total_user_num;
     uint256 alpha;
@@ -58,6 +57,7 @@ contract Protocol is Ownable {
                     reward[inviter] +
                     min(contribution[inviter], contribution[self])**beta;
         }
+
         for (i = 0; i < length; ++i) {
             address payable user = user_list[i];
             if (user != msg.sender) require(msg.sender.balance >= reward[user]);
@@ -98,17 +98,6 @@ contract Protocol is Ownable {
         policy_time[msg.sender] = now + cooldown_time;
     }
 
-    /*
-    function show_friends() public returns(uint) {
-        uint id = usertoid[msg.sender];
-        uint friend_num = 0;
-        for (uint i = 1; i <= total_user_num; ++i)
-            if (friends[id][i] == true) {
-                friend_num += 1;
-            }
-        return friend_num;
-    }
-    */
     //查询自己的贡献
     function show_contribution() public view returns (uint256) {
         return contribution[msg.sender];
@@ -121,5 +110,9 @@ contract Protocol is Ownable {
 
     function show_inviter() public view returns (address) {
         return invitation[msg.sender];
+    }
+
+    function get_my_address() public view returns (address) {
+        return msg.sender;
     }
 }
