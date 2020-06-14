@@ -6,7 +6,7 @@
 
 ```
 $ npm i
-$ npm -E -g truffle
+$ npm i -g truffle
 $ truffle develop
 ```
 
